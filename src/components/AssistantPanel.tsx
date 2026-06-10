@@ -1,7 +1,11 @@
-import { useChat } from "@ai-sdk/react";
-import { DefaultChatTransport } from "ai";
 import { useEffect, useRef, useState } from "react";
 import { MessageCircle, Send, X } from "lucide-react";
+
+type ChatMessage = {
+  id: string;
+  role: "user" | "assistant";
+  text: string;
+};
 
 const SUGGESTED = [
   "What kind of roles is Clewis targeting?",
@@ -13,14 +17,11 @@ const SUGGESTED = [
 export function AssistantPanel() {
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState("");
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
-
-  const { messages, sendMessage, status, error } = useChat({
-    transport: new DefaultChatTransport({ api: "/api/chat" }),
-  });
-
-  const isLoading = status === "submitted" || status === "streaming";
 
   useEffect(() => {
     if (open) setTimeout(() => inputRef.current?.focus(), 50);
@@ -30,10 +31,53 @@ export function AssistantPanel() {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
   }, [messages, isLoading]);
 
-  const submit = (text: string) => {
+  const submit = async (text: string) => {
     if (!text.trim() || isLoading) return;
-    sendMessage({ text: text.trim() });
+
+    const userMessage: ChatMessage = {
+      id: crypto.randomUUID(),
+      role: "user",
+      text: text.trim(),
+    };
+
+    const nextMessages = [...messages, userMessage];
+    setMessages(nextMessages);
     setInput("");
+    setError(null);
+    setIsLoading(true);
+
+    try {
+      const response = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          messages: nextMessages.map(({ role, text: messageText }) => ({
+            role,
+            text: messageText,
+          })),
+        }),
+      });
+
+      const data = (await response.json()) as { message?: string; error?: string };
+      if (!response.ok || !data.message) {
+        throw new Error(data.error || "Something went wrong. Try again in a moment.");
+      }
+
+      setMessages((current) => [
+        ...current,
+        {
+          id: crypto.randomUUID(),
+          role: "assistant",
+          text: data.message,
+        },
+      ]);
+    } catch (submitError) {
+      const message =
+        submitError instanceof Error ? submitError.message : "Something went wrong.";
+      setError(message);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -68,7 +112,7 @@ export function AssistantPanel() {
                 key={q}
                 onClick={() => {
                   setOpen(true);
-                  submit(q);
+                  void submit(q);
                 }}
                 className="rounded-md border border-border bg-background px-3 py-2 text-left text-xs sm:text-sm text-foreground hover:border-primary/40 hover:bg-muted transition-colors chad:btn-95"
               >
@@ -89,7 +133,6 @@ export function AssistantPanel() {
         </div>
       </div>
 
-      {/* Floating launcher */}
       {!open && (
         <button
           onClick={() => setOpen(true)}
@@ -101,7 +144,6 @@ export function AssistantPanel() {
         </button>
       )}
 
-      {/* Drawer */}
       {open && (
         <div className="fixed inset-0 z-50 flex items-end sm:items-center sm:justify-end">
           <div
@@ -132,7 +174,7 @@ export function AssistantPanel() {
                     {SUGGESTED.map((q) => (
                       <button
                         key={q}
-                        onClick={() => submit(q)}
+                        onClick={() => void submit(q)}
                         className="block w-full text-left rounded-md border border-border bg-background px-3 py-2 text-sm hover:border-primary/40 hover:bg-muted chad:btn-95"
                       >
                         {q}
@@ -143,9 +185,6 @@ export function AssistantPanel() {
               )}
 
               {messages.map((m) => {
-                const text = m.parts
-                  .map((p) => (p.type === "text" ? p.text : ""))
-                  .join("");
                 const isUser = m.role === "user";
                 return (
                   <div key={m.id} className={isUser ? "flex justify-end" : "flex justify-start"}>
@@ -157,7 +196,7 @@ export function AssistantPanel() {
                           : "bg-muted text-foreground border border-border")
                       }
                     >
-                      {text}
+                      {m.text}
                     </div>
                   </div>
                 );
@@ -166,17 +205,13 @@ export function AssistantPanel() {
               {isLoading && (
                 <div className="text-xs text-muted-foreground font-mono">thinking…</div>
               )}
-              {error && (
-                <div className="text-xs text-destructive">
-                  Something went wrong. Try again in a moment.
-                </div>
-              )}
+              {error && <div className="text-xs text-destructive">{error}</div>}
             </div>
 
             <form
               onSubmit={(e) => {
                 e.preventDefault();
-                submit(input);
+                void submit(input);
               }}
               className="border-t border-border p-3 flex gap-2"
             >

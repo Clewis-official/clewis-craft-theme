@@ -1,6 +1,10 @@
-import { createLovableAiGatewayProvider } from "@/lib/ai-gateway.server";
 import { createFileRoute } from "@tanstack/react-router";
-import { convertToModelMessages, streamText, type UIMessage } from "ai";
+import OpenAI from "openai";
+
+type ChatMessage = {
+  role: "user" | "assistant";
+  text: string;
+};
 
 const SYSTEM_PROMPT = `You are an assistant on Clewis's personal website. You answer questions about Clewis's background, projects, and work style based on the facts below. Be concise, calm, and specific. If asked something you don't know, say so plainly. Do not invent employers, dates, or metrics.
 
@@ -24,20 +28,47 @@ export const Route = createFileRoute("/api/chat")({
   server: {
     handlers: {
       POST: async ({ request }) => {
-        const { messages } = (await request.json()) as { messages?: UIMessage[] };
-        if (!Array.isArray(messages)) return new Response("Messages required", { status: 400 });
+        const { messages } = (await request.json()) as { messages?: ChatMessage[] };
+        if (!Array.isArray(messages)) {
+          return Response.json({ error: "Messages required." }, { status: 400 });
+        }
 
-        const key = process.env.LOVABLE_API_KEY;
-        if (!key) return new Response("Missing LOVABLE_API_KEY", { status: 500 });
+        const key = process.env.OPENAI_API_KEY;
+        if (!key) {
+          return Response.json({ error: "Missing OPENAI_API_KEY." }, { status: 500 });
+        }
 
-        const gateway = createLovableAiGatewayProvider(key);
-        const result = streamText({
-          model: gateway("google/gemini-3-flash-preview"),
-          system: SYSTEM_PROMPT,
-          messages: await convertToModelMessages(messages),
-        });
+        const openai = new OpenAI({ apiKey: key });
+        const model = process.env.OPENAI_CHAT_MODEL ?? "gpt-4.1-mini";
 
-        return result.toUIMessageStreamResponse({ originalMessages: messages });
+        try {
+          const response = await openai.responses.create({
+            model,
+            instructions: SYSTEM_PROMPT,
+            input: messages.map((message) => ({
+              role: message.role,
+              content: [
+                {
+                  type: message.role === "assistant" ? "output_text" : "input_text",
+                  text: message.text,
+                },
+              ],
+            })),
+          });
+
+          const text = response.output_text?.trim();
+          if (!text) {
+            return Response.json(
+              { error: "OpenAI returned an empty response." },
+              { status: 502 },
+            );
+          }
+
+          return Response.json({ message: text });
+        } catch (error) {
+          console.error("Chat request failed", error);
+          return Response.json({ error: "Chat request failed." }, { status: 502 });
+        }
       },
     },
   },

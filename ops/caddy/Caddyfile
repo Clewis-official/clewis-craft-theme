@@ -1,0 +1,23 @@
+{
+  email toaarondc@gmail.com
+}
+
+(www_redirect) {
+  redir https://aaronclewis.com{uri} permanent
+}
+
+(app_proxy) {
+  reverse_proxy 127.0.0.1:3000
+}
+
+aaronclewis.com {
+  import app_proxy
+}
+
+hire.aaronclewis.com {
+  import app_proxy
+}
+
+www.aaronclewis.com {
+  import www_redirect
+}

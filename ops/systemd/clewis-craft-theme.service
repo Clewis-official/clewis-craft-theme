@@ -1,0 +1,21 @@
+[Unit]
+Description=Clewis Craft Theme website
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=dad
+Group=dad
+WorkingDirectory=/var/www/clewis-craft-theme
+EnvironmentFile=/var/www/clewis-craft-theme/.env
+Environment=HOST=127.0.0.1
+Environment=PORT=3000
+ExecStart=/usr/bin/npm run start
+Restart=always
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

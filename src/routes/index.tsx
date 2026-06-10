@@ -151,7 +151,7 @@ function Hero() {
           View Resume
         </a>
         <a
-          href="https://www.linkedin.com/"
+          href="https://www.linkedin.com/in/aaron-clewis-4504244/"
           target="_blank"
           rel="noreferrer"
           className="inline-flex items-center gap-2 rounded-md border border-border bg-card px-4 py-2.5 text-sm font-medium text-foreground hover:bg-muted chad:btn-95"
@@ -160,7 +160,7 @@ function Hero() {
           LinkedIn
         </a>
         <a
-          href="mailto:hello@example.com"
+          href="mailto:toaarondc@gmail.com"
           className="inline-flex items-center gap-2 rounded-md border border-border bg-card px-4 py-2.5 text-sm font-medium text-foreground hover:bg-muted chad:btn-95"
         >
           <Mail className="h-4 w-4" />
@@ -324,10 +324,10 @@ function Footer() {
           </p>
         </div>
         <div className="flex flex-wrap gap-4 text-sm">
-          <a href="mailto:hello@example.com" className="inline-flex items-center gap-2 text-foreground hover:text-primary">
+          <a href="mailto:toaarondc@gmail.com" className="inline-flex items-center gap-2 text-foreground hover:text-primary">
             <Mail className="h-4 w-4" /> Email
           </a>
-          <a href="https://www.linkedin.com/" target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 text-foreground hover:text-primary">
+          <a href="https://www.linkedin.com/in/aaron-clewis-4504244/" target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 text-foreground hover:text-primary">
             <Linkedin className="h-4 w-4" /> LinkedIn
           </a>
           <a href="/resume.pdf" className="inline-flex items-center gap-2 text-foreground hover:text-primary">
