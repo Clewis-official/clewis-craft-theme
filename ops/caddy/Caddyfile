@@ -6,16 +6,28 @@
   redir https://aaronclewis.com{uri} permanent
 }
 
-(app_proxy) {
-  reverse_proxy 127.0.0.1:3000
+(app_site) {
+  root * /var/www/clewis-craft-theme/dist/client
+
+  handle /assets/* {
+    file_server
+  }
+
+  handle /resume.pdf {
+    file_server
+  }
+
+  handle {
+    reverse_proxy 127.0.0.1:3000
+  }
 }
 
 aaronclewis.com {
-  import app_proxy
+  import app_site
 }
 
 hire.aaronclewis.com {
-  import app_proxy
+  import app_site
 }
 
 www.aaronclewis.com {

@@ -52,3 +52,4 @@ Expected public behavior:
 - `https://aaronclewis.com` serves the main site
 - `https://www.aaronclewis.com` redirects to apex
 - `https://hire.aaronclewis.com` serves the same site for now
+- `/assets/*` and `/resume.pdf` are served directly from `dist/client` by Caddy
