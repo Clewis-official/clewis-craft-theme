@@ -20,7 +20,7 @@ import {
   TrendingUp,
   Workflow,
 } from "lucide-react";
-import type { ComponentType } from "react";
+import type { ComponentType, ReactNode } from "react";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -186,6 +186,12 @@ const PRINCIPLES = [
 const INTRO_EMAIL =
   "mailto:toaarondc@gmail.com?subject=15%20minute%20intro%20with%20Aaron&body=Hi%20Aaron%2C%0A%0AI%27d%20like%20to%20set%20up%20a%2015-minute%20intro.%20A%20few%20times%20that%20work%20for%20me%20are%3A%0A-%20%0A-%20%0A-%20%0A%0AThanks.";
 
+const BOOKING_URL = import.meta.env.VITE_BOOKING_URL?.trim() || "";
+const BOOKING_EMBED_URL = import.meta.env.VITE_BOOKING_EMBED_URL?.trim() || "";
+const HAS_LIVE_BOOKING = BOOKING_URL.length > 0;
+const HAS_EMBEDDED_BOOKING = BOOKING_EMBED_URL.length > 0;
+const BOOKING_CTA_URL = HAS_LIVE_BOOKING ? BOOKING_URL : INTRO_EMAIL;
+
 function IndexPage() {
   return (
     <ThemeProvider>
@@ -219,6 +225,8 @@ function Site() {
         <Divider />
         <Looking />
         <Divider />
+        <Booking />
+        <Divider />
         <section className="py-14 sm:py-20">
           <SectionHeader eyebrow="Assistant" title="Optional" />
           <div className="mt-6">
@@ -228,6 +236,19 @@ function Site() {
         <Footer />
       </main>
     </div>
+  );
+}
+
+function BookingLink({ className, children }: { className: string; children: ReactNode }) {
+  return (
+    <a
+      href={BOOKING_CTA_URL}
+      target={HAS_LIVE_BOOKING ? "_blank" : undefined}
+      rel={HAS_LIVE_BOOKING ? "noreferrer" : undefined}
+      className={className}
+    >
+      {children}
+    </a>
   );
 }
 
@@ -310,13 +331,10 @@ function Hero() {
           <FileText className="h-4 w-4" />
           View resume
         </a>
-        <a
-          href={INTRO_EMAIL}
-          className="inline-flex items-center gap-2 rounded-md border border-border bg-card px-4 py-2.5 text-sm font-medium text-foreground hover:bg-muted chad:btn-95"
-        >
+        <BookingLink className="inline-flex items-center gap-2 rounded-md border border-border bg-card px-4 py-2.5 text-sm font-medium text-foreground hover:bg-muted chad:btn-95">
           <CalendarDays className="h-4 w-4" />
           Book a 15 min intro
-        </a>
+        </BookingLink>
         <a
           href="https://www.linkedin.com/in/aaron-clewis-4504244/"
           target="_blank"
@@ -556,19 +574,72 @@ function Looking() {
         </div>
         <div className="paper-card p-6">
           <h3 className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
-            15 minute intro
+            Calendar
           </h3>
           <p className="mt-3 leading-relaxed text-foreground">
-            Calendar booking is the next step. For now, email Aaron a few times that work and he
-            will confirm a short intro conversation manually.
+            {HAS_LIVE_BOOKING
+              ? "Use the live scheduling link to book a short intro with Aaron at a time that works for you."
+              : "A live booking link is ready to plug in here. For now, email Aaron a few times that work and he will confirm a short intro conversation manually."}
           </p>
-          <a
-            href={INTRO_EMAIL}
-            className="mt-4 inline-flex items-center gap-2 rounded-md bg-primary px-4 py-2.5 text-sm font-medium text-primary-foreground hover:opacity-90 chad:btn-95"
-          >
+          <BookingLink className="mt-4 inline-flex items-center gap-2 rounded-md bg-primary px-4 py-2.5 text-sm font-medium text-primary-foreground hover:opacity-90 chad:btn-95">
             <CalendarDays className="h-4 w-4" />
-            Book a 15 min intro with Aaron
-          </a>
+            {HAS_LIVE_BOOKING ? "Book a 15 min intro" : "Request a 15 min intro"}
+          </BookingLink>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Booking() {
+  return (
+    <section id="booking" className="py-14 sm:py-20">
+      <SectionHeader eyebrow="Calendar" title="Book a 15 minute intro" />
+      <div className="mt-6 grid gap-6 lg:grid-cols-[0.7fr_1.3fr]">
+        <div className="paper-card p-6 sm:p-8">
+          <p className="font-display text-2xl leading-tight text-foreground sm:text-3xl">
+            Pick a time that works.
+          </p>
+          <p className="mt-4 text-base leading-relaxed text-muted-foreground">
+            {HAS_LIVE_BOOKING
+              ? "The site can now route visitors to a live scheduling page. If you add an embeddable calendar URL, the scheduler can also appear inline here."
+              : "This section is ready for a live scheduling link. Once a booking URL is configured, visitors can book a short intro here instead of emailing time options manually."}
+          </p>
+          <div className="mt-5 flex flex-wrap gap-3">
+            <BookingLink className="inline-flex items-center gap-2 rounded-md bg-primary px-4 py-2.5 text-sm font-medium text-primary-foreground hover:opacity-90 chad:btn-95">
+              <CalendarDays className="h-4 w-4" />
+              {HAS_LIVE_BOOKING ? "Open booking page" : "Request by email"}
+            </BookingLink>
+            <a
+              href="mailto:toaarondc@gmail.com"
+              className="inline-flex items-center gap-2 rounded-md border border-border bg-card px-4 py-2.5 text-sm font-medium text-foreground hover:bg-muted chad:btn-95"
+            >
+              <Mail className="h-4 w-4" />
+              Email Aaron
+            </a>
+          </div>
+        </div>
+
+        <div className="paper-card overflow-hidden p-2 sm:p-3">
+          {HAS_EMBEDDED_BOOKING ? (
+            <iframe
+              src={BOOKING_EMBED_URL}
+              title="Book a 15 minute intro with Aaron"
+              className="h-[760px] w-full rounded-md border-0 bg-background"
+              loading="lazy"
+              referrerPolicy="strict-origin-when-cross-origin"
+            />
+          ) : (
+            <div className="flex h-[360px] items-center justify-center rounded-md border border-dashed border-border bg-muted/40 p-6 text-center">
+              <div className="max-w-md">
+                <p className="font-display text-2xl text-foreground">Inline calendar ready</p>
+                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                  Add `VITE_BOOKING_URL` for the live button and `VITE_BOOKING_EMBED_URL` for an
+                  embedded scheduler here.
+                </p>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </section>
