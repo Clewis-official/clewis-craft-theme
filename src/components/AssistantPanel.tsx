@@ -8,10 +8,11 @@ type ChatMessage = {
 };
 
 const SUGGESTED = [
-  "What kind of roles is Clewis targeting?",
+  "What kind of roles is Aaron targeting?",
   "What did he build at Collision Champs?",
-  "Tell me about his forecasting experience.",
-  "How does he explain his career break?",
+  "Tell me about Aaron's forecasting experience.",
+  "How does Aaron explain his career break?",
+  "What does Aaron mean by personal computing?",
 ];
 
 export function AssistantPanel() {
@@ -72,8 +73,7 @@ export function AssistantPanel() {
         },
       ]);
     } catch (submitError) {
-      const message =
-        submitError instanceof Error ? submitError.message : "Something went wrong.";
+      const message = submitError instanceof Error ? submitError.message : "Something went wrong.";
       setError(message);
     } finally {
       setIsLoading(false);
@@ -100,10 +100,10 @@ export function AssistantPanel() {
         </div>
         <div className="chad:p-4">
           <h2 className="font-display text-2xl sm:text-3xl text-foreground">
-            Ask about my background, projects, and work style.
+            Ask about Aaron's background, projects, and work style.
           </h2>
           <p className="mt-2 text-sm text-muted-foreground max-w-xl">
-            This assistant answers questions based on my resume and project summaries.
+            This assistant answers questions about Aaron based on his resume and project summaries.
           </p>
 
           <div className="mt-5 flex flex-wrap gap-2">
@@ -168,7 +168,7 @@ export function AssistantPanel() {
               {messages.length === 0 && (
                 <div className="space-y-3">
                   <p className="text-sm text-muted-foreground">
-                    Ask anything about Clewis's background, projects, or what he's looking for.
+                    Ask anything about Aaron's background, projects, or what he's looking for.
                   </p>
                   <div className="space-y-2">
                     {SUGGESTED.map((q) => (

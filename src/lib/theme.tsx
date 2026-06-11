@@ -15,14 +15,20 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   const [theme, setThemeState] = useState<Theme>("default");
 
   useEffect(() => {
-    const saved = (typeof window !== "undefined" && localStorage.getItem(STORAGE_KEY)) as Theme | null;
+    const saved = (typeof window !== "undefined" &&
+      localStorage.getItem(STORAGE_KEY)) as Theme | null;
     if (saved === "chad" || saved === "default") setThemeState(saved);
   }, []);
 
   useEffect(() => {
     const root = document.documentElement;
     root.classList.toggle("chad", theme === "chad");
-    try { localStorage.setItem(STORAGE_KEY, theme); } catch {}
+
+    try {
+      localStorage.setItem(STORAGE_KEY, theme);
+    } catch {
+      // Ignore localStorage write failures.
+    }
   }, [theme]);
 
   const value: ThemeCtx = {
