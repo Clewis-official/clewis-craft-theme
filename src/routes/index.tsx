@@ -163,7 +163,7 @@ const COMPUTING_POINTS = [
   {
     icon: LaptopMinimal,
     title: "Programming as habit",
-    body: "Programming is not just something Aaron Clewis learned for work. It is a durable habit, a preferred way of thinking, and a toolset he keeps returning to because he genuinely enjoys it.",
+    body: "Programming is not just something Aaron learned for work. It is a durable habit, a preferred way of thinking, and a toolset he keeps returning to because he genuinely enjoys it.",
   },
   {
     icon: HardDrive,
@@ -173,7 +173,7 @@ const COMPUTING_POINTS = [
   {
     icon: ServerCog,
     title: "10,000+ hours of programming",
-    body: "That experience shows up in the way Aaron Clewis approaches systems: practical, hands-on, and comfortable moving from messy inputs to durable outputs.",
+    body: "That experience shows up in the way Aaron approaches systems: practical, hands-on, and comfortable moving from messy inputs to durable outputs.",
   },
 ];
 
@@ -289,12 +289,12 @@ function Hero() {
         </span>
       </div>
       <h1 className="max-w-4xl font-display text-4xl leading-[1.05] text-foreground sm:text-6xl">
-        Aaron Clewis builds
+        Aaron builds
         <span className="text-primary">
           {" "}
           decision systems, reporting workflows, and practical automation
         </span>{" "}
-        with SQL, Python, and bash.
+        for real-world business operations.
       </h1>
       <p className="mt-6 max-w-3xl text-base leading-relaxed text-muted-foreground sm:text-lg">
         He works best where analysis and implementation stay close together: forecasting, reporting,
@@ -419,7 +419,7 @@ function WorkCard({ item, compact = false }: { item: WorkItem; compact?: boolean
 function SelectedWork() {
   return (
     <section id="work" className="py-14 sm:py-20">
-      <SectionHeader eyebrow="Selected work" title="Problems Aaron Clewis has solved" />
+      <SectionHeader eyebrow="Selected work" title="Problems Aaron has solved" />
       <p className="mt-4 max-w-3xl text-muted-foreground">
         The point is not just analysis in the abstract. It is building systems, workflows, and
         outputs that help people make decisions, move work forward, and reduce manual drag.
@@ -456,10 +456,10 @@ function PersonalComputing() {
             work done."
           </p>
           <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground">
-            Aaron Clewis is in that second group. He likes programming for its own sake, likes the
-            command line, likes building systems, and likes the feeling of taking something messy
-            and making it coherent. That matters because the work does not stop when the ticket is
-            done. The curiosity stays on.
+            Aaron is in that second group. He likes programming for its own sake, likes the command
+            line, likes building systems, and likes the feeling of taking something messy and making
+            it coherent. That matters because the work does not stop when the ticket is done. The
+            curiosity stays on.
           </p>
           <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted-foreground">
             The result is a working style shaped by long-running personal computing habits:
@@ -499,7 +499,7 @@ function PersonalComputing() {
 function HowIWork() {
   return (
     <section id="approach" className="py-14 sm:py-20">
-      <SectionHeader eyebrow="Approach" title="How Aaron Clewis works" />
+      <SectionHeader eyebrow="Approach" title="How Aaron works" />
       <p className="mt-6 max-w-3xl text-lg leading-relaxed text-foreground/90">
         He does his best work on messy, real business problems where analysis and implementation
         stay close together. The goal is not theory for its own sake. The goal is useful systems,
@@ -521,10 +521,10 @@ function CareerBreak() {
     <section className="py-14 sm:py-20">
       <SectionHeader eyebrow="2021 - 2025" title="Career break" />
       <p className="mt-6 max-w-3xl text-base leading-relaxed text-muted-foreground">
-        From June 2021 through December 2025, Aaron Clewis took a planned career break focused on
-        primary family caregiving, independent research, and continued technical development. During
-        that period he stayed hands-on through self-hosted systems, automation work, and ongoing
-        study across analytics, infrastructure, and digital-asset market structure.
+        From June 2021 through December 2025, Aaron took a planned career break focused on primary
+        family caregiving, independent research, and continued technical development. During that
+        period he stayed hands-on through self-hosted systems, automation work, and ongoing study
+        across analytics, infrastructure, and digital-asset market structure.
       </p>
     </section>
   );
@@ -533,7 +533,7 @@ function CareerBreak() {
 function Looking() {
   return (
     <section id="contact" className="py-14 sm:py-20">
-      <SectionHeader eyebrow="Now" title="What Aaron Clewis is looking for" />
+      <SectionHeader eyebrow="Now" title="What Aaron is looking for" />
       <div className="mt-6 grid gap-6 md:grid-cols-3">
         <div className="paper-card p-6">
           <h3 className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
@@ -581,7 +581,7 @@ function Footer() {
       <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
         <div>
           <div className="font-display text-lg">
-            Aaron Clewis<span className="text-primary">.</span>
+            Aaron<span className="text-primary">.</span>
           </div>
           <p className="mt-1 font-mono text-xs text-muted-foreground">
             Analytics, automation, and durable systems.
