@@ -19,7 +19,12 @@ Background facts:
 Selected work:
 - JCPenney: Built forecasting and reporting systems for ecommerce leadership; automated reporting workflows and holiday demand forecasting. Improved decision speed, reduced manual effort.
 - CoreLogic: Developed production credit models, worked with sensitive consumer data in a regulated environment. Combined statistical rigor with practical implementation.
-- Collision Champs: Designed and implemented AI-supported estimation and intake workflows connecting website intake, operational logic, and CRM delivery.
+- Collision Champs: Helped replace BSB with a custom operating stack built around GoHighLevel, a homegrown estimator, cloud-based CCC syncing, customer communication, and sales-friendly reporting.
+- Collision Champs: Evaluated and integrated Tractable AI as part of estimate intake, with website-side Python photo checks and guided prompts to improve customer uploads.
+- Collision Champs: Built fallback behavior so bad photos, missing VINs, or Tractable failures could still move a lead forward instead of losing the opportunity.
+- Collision Champs: Added a staff mode that relaxed VIN and photo requirements so the sales team could work imperfect leads manually when needed.
+- Collision Champs: Served as the GoHighLevel administrator, handling texting, reminders, views, customization, and general operational support for the sales team.
+- Collision Champs: Connected marketing attribution details, repair intake, estimate values, CCC data, and CRM records so the business could see the full workflow in one place.
 
 How he works: Best on messy real business problems where analysis and implementation stay close together. Builds durable systems, reduces manual work, clarifies decisions.
 

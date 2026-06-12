@@ -121,12 +121,12 @@ const FEATURED_WORK: WorkItem[] = [
   },
   {
     company: "Collision Champs",
-    problem: "AI-supported estimate intake",
-    role: "Operational workflow design",
-    body: "Designed AI-supported estimation and intake workflows that connected website intake, business logic, and CRM delivery into one usable operating flow.",
+    problem: "Replacing a fragmented estimate and CRM workflow",
+    role: "Operational workflow design and systems integration",
+    body: "Helped replace BSB with a custom operating stack built around GoHighLevel, a homegrown estimator, cloud-based CCC syncing, customer communication, and sales-friendly reporting.",
     outcome:
-      "Turned AI from a demo concept into a day-to-day workflow that could support actual shop operations.",
-    tags: ["AI Workflows", "Automation", "Operational Systems"],
+      "Turned a patchwork process into a more durable workflow the sales team could actually use day to day without depending on manual notes or a laptop-hosted sync.",
+    tags: ["Systems Integration", "CRM", "Operational Systems"],
   },
 ];
 
@@ -151,11 +151,12 @@ const MORE_WORK: WorkItem[] = [
   },
   {
     company: "Collision Champs",
-    problem: "Lead routing and handoff logic",
-    role: "CRM-connected automation",
-    body: "Connected intake logic, CRM actions, and downstream handoffs so the business could move faster from inbound interest to the next operational step.",
-    outcome: "Reduced friction between customer entry, internal workflow, and follow-up execution.",
-    tags: ["CRM Automation", "Workflow Design", "Bash"],
+    problem: "Reliable photo intake and fallback estimation",
+    role: "CRM-connected automation and AI workflow reliability",
+    body: "Evaluated Tractable AI, built Python-based photo-quality checks on the website, guided customers toward better uploads, and added fallback logic so bad photos or AI failures would still produce a usable estimate path.",
+    outcome:
+      "Improved estimate intake quality, reduced lead loss, and gave staff a practical override mode when imperfect real-world inputs needed manual handling.",
+    tags: ["AI Workflows", "Python", "Fallback Design"],
   },
 ];
 
@@ -187,9 +188,7 @@ const INTRO_EMAIL =
   "mailto:toaarondc@gmail.com?subject=15%20minute%20intro%20with%20Aaron&body=Hi%20Aaron%2C%0A%0AI%27d%20like%20to%20set%20up%20a%2015-minute%20intro.%20A%20few%20times%20that%20work%20for%20me%20are%3A%0A-%20%0A-%20%0A-%20%0A%0AThanks.";
 
 const BOOKING_URL = import.meta.env.VITE_BOOKING_URL?.trim() || "";
-const BOOKING_EMBED_URL = import.meta.env.VITE_BOOKING_EMBED_URL?.trim() || "";
 const HAS_LIVE_BOOKING = BOOKING_URL.length > 0;
-const HAS_EMBEDDED_BOOKING = BOOKING_EMBED_URL.length > 0;
 const BOOKING_CTA_URL = HAS_LIVE_BOOKING ? BOOKING_URL : INTRO_EMAIL;
 
 function IndexPage() {
@@ -224,8 +223,6 @@ function Site() {
         <CareerBreak />
         <Divider />
         <Looking />
-        <Divider />
-        <Booking />
         <Divider />
         <section className="py-14 sm:py-20">
           <SectionHeader eyebrow="Assistant" title="Optional" />
@@ -585,61 +582,6 @@ function Looking() {
             <CalendarDays className="h-4 w-4" />
             {HAS_LIVE_BOOKING ? "Book a 15 min intro" : "Request a 15 min intro"}
           </BookingLink>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function Booking() {
-  return (
-    <section id="booking" className="py-14 sm:py-20">
-      <SectionHeader eyebrow="Calendar" title="Book a 15 minute intro" />
-      <div className="mt-6 grid gap-6 lg:grid-cols-[0.7fr_1.3fr]">
-        <div className="paper-card p-6 sm:p-8">
-          <p className="font-display text-2xl leading-tight text-foreground sm:text-3xl">
-            Pick a time that works.
-          </p>
-          <p className="mt-4 text-base leading-relaxed text-muted-foreground">
-            {HAS_LIVE_BOOKING
-              ? "The site can now route visitors to a live scheduling page. If you add an embeddable calendar URL, the scheduler can also appear inline here."
-              : "This section is ready for a live scheduling link. Once a booking URL is configured, visitors can book a short intro here instead of emailing time options manually."}
-          </p>
-          <div className="mt-5 flex flex-wrap gap-3">
-            <BookingLink className="inline-flex items-center gap-2 rounded-md bg-primary px-4 py-2.5 text-sm font-medium text-primary-foreground hover:opacity-90 chad:btn-95">
-              <CalendarDays className="h-4 w-4" />
-              {HAS_LIVE_BOOKING ? "Open booking page" : "Request by email"}
-            </BookingLink>
-            <a
-              href="mailto:toaarondc@gmail.com"
-              className="inline-flex items-center gap-2 rounded-md border border-border bg-card px-4 py-2.5 text-sm font-medium text-foreground hover:bg-muted chad:btn-95"
-            >
-              <Mail className="h-4 w-4" />
-              Email Aaron
-            </a>
-          </div>
-        </div>
-
-        <div className="paper-card overflow-hidden p-2 sm:p-3">
-          {HAS_EMBEDDED_BOOKING ? (
-            <iframe
-              src={BOOKING_EMBED_URL}
-              title="Book a 15 minute intro with Aaron"
-              className="h-[760px] w-full rounded-md border-0 bg-background"
-              loading="lazy"
-              referrerPolicy="strict-origin-when-cross-origin"
-            />
-          ) : (
-            <div className="flex h-[360px] items-center justify-center rounded-md border border-dashed border-border bg-muted/40 p-6 text-center">
-              <div className="max-w-md">
-                <p className="font-display text-2xl text-foreground">Inline calendar ready</p>
-                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-                  Add `VITE_BOOKING_URL` for the live button and `VITE_BOOKING_EMBED_URL` for an
-                  embedded scheduler here.
-                </p>
-              </div>
-            </div>
-          )}
         </div>
       </div>
     </section>
