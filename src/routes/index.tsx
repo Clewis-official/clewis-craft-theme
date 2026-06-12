@@ -618,7 +618,7 @@ function Looking() {
           <p className="mt-3 leading-relaxed text-foreground">
             Primarily remote. Open to the right in-person or hybrid opportunity in
             <strong> Parkland / South Florida</strong>, <strong>Coppell / DFW</strong>, and possibly{" "}
-            <strong> Reno.
+            <strong> Reno.</strong>
           </p>
         </div>
         <div className="paper-card p-6">
