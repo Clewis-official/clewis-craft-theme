@@ -57,6 +57,11 @@ type WorkItem = {
   tags: string[];
 };
 
+type SpotlightPoint = {
+  title: string;
+  body: string;
+};
+
 const CAPABILITIES: Capability[] = [
   {
     icon: Database,
@@ -119,15 +124,6 @@ const FEATURED_WORK: WorkItem[] = [
       "Supported modeling work that needed to be reliable, defensible, and usable inside a real production context.",
     tags: ["Predictive Modeling", "Regulated Data", "Production Systems"],
   },
-  {
-    company: "Collision Champs",
-    problem: "Replacing a fragmented estimate and CRM workflow",
-    role: "Operational workflow design and systems integration",
-    body: "Helped replace BSB with a custom operating stack built around GoHighLevel, a homegrown estimator, cloud-based CCC syncing, customer communication, and sales-friendly reporting.",
-    outcome:
-      "Turned a patchwork process into a more durable workflow the sales team could actually use day to day without depending on manual notes or a laptop-hosted sync.",
-    tags: ["Systems Integration", "CRM", "Operational Systems"],
-  },
 ];
 
 const MORE_WORK: WorkItem[] = [
@@ -149,14 +145,30 @@ const MORE_WORK: WorkItem[] = [
       "Kept analytical work grounded in workflows that could stand up to scrutiny instead of living as one-off analysis.",
     tags: ["Data Discipline", "Analytical Process", "Risk Awareness"],
   },
+];
+
+const COLLISION_CHAMPS_SPOTLIGHT = {
+  company: "Collision Champs",
+  problem: "Replacing a broken estimate-intake stack with one usable sales workflow",
+  role: "Systems integration, CRM ownership, workflow design, and applied AI",
+  body: "Aaron helped replace a patchwork process spread across BodyShop Booster, handwritten notes, a failed call-center layer, and improvised CCC syncing with a more durable operating system for intake, estimating, customer communication, reporting, and sales follow-up.",
+  outcome:
+    "The result was a workflow the sales team could actually run on: cloud-based where it mattered, resilient when photos or AI failed, and far less dependent on manual rescue work.",
+  tags: ["Systems Integration", "CRM", "Operational Systems", "Applied AI"],
+};
+
+const COLLISION_CHAMPS_POINTS: SpotlightPoint[] = [
   {
-    company: "Collision Champs",
-    problem: "Reliable photo intake and fallback estimation",
-    role: "CRM-connected automation and AI workflow reliability",
-    body: "Evaluated Tractable AI, built Python-based photo-quality checks on the website, guided customers toward better uploads, and added fallback logic so bad photos or AI failures would still produce a usable estimate path.",
-    outcome:
-      "Improved estimate intake quality, reduced lead loss, and gave staff a practical override mode when imperfect real-world inputs needed manual handling.",
-    tags: ["AI Workflows", "Python", "Fallback Design"],
+    title: "GoHighLevel, estimating, and CCC in one flow",
+    body: "Built a CCC data-sync process from scratch using website scraping, later moved it to the cloud, and connected that data with GoHighLevel, a ChatGPT-based estimator, customer communication, and reporting so the business could work from one coherent process instead of several disconnected tools.",
+  },
+  {
+    title: "Photo-quality controls and resilient AI handoffs",
+    body: "Evaluated Tractable AI, added Python-based photo-quality checks and guided upload prompts, and built fallback behavior so poor photos or failed AI runs would still move the lead forward.",
+  },
+  {
+    title: "Admin support for messy real-world leads",
+    body: "Served as the GoHighLevel administrator and added staff-mode overrides so the sales team could work imperfect leads when VINs, photos, or other inputs were incomplete.",
   },
 ];
 
@@ -440,11 +452,60 @@ function SelectedWork() {
         outputs that help people make decisions, move work forward, and reduce manual drag.
       </p>
 
-      <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-3">
+      <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2">
         {FEATURED_WORK.map((item) => (
           <WorkCard key={`${item.company}-${item.problem}`} item={item} />
         ))}
       </div>
+
+      <article className="paper-card mt-8 p-6 sm:p-8">
+        <div className="flex items-start justify-between gap-4">
+          <div>
+            <p className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">
+              {COLLISION_CHAMPS_SPOTLIGHT.company}
+            </p>
+            <h3 className="mt-3 max-w-3xl font-display text-2xl text-foreground sm:text-3xl">
+              {COLLISION_CHAMPS_SPOTLIGHT.problem}
+            </h3>
+            <p className="mt-2 font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">
+              {COLLISION_CHAMPS_SPOTLIGHT.role}
+            </p>
+          </div>
+          <ArrowUpRight className="mt-1 h-4 w-4 text-muted-foreground" />
+        </div>
+
+        <p className="mt-5 max-w-4xl text-base leading-relaxed text-foreground/90">
+          {COLLISION_CHAMPS_SPOTLIGHT.body}
+        </p>
+        <p className="mt-4 max-w-4xl text-base leading-relaxed text-muted-foreground">
+          {COLLISION_CHAMPS_SPOTLIGHT.outcome}
+        </p>
+
+        <div className="mt-5 flex flex-wrap gap-1.5">
+          {COLLISION_CHAMPS_SPOTLIGHT.tags.map((tag) => (
+            <span
+              key={tag}
+              className="rounded border border-border px-2 py-1 font-mono text-[10px] uppercase tracking-wider text-muted-foreground chad:rounded-none"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+
+        <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-3">
+          {COLLISION_CHAMPS_POINTS.map((point) => (
+            <div
+              key={point.title}
+              className="rounded border border-border bg-muted/20 p-5 chad:bg-card"
+            >
+              <p className="font-mono text-xs uppercase tracking-[0.18em] text-muted-foreground">
+                {point.title}
+              </p>
+              <p className="mt-3 text-sm leading-relaxed text-foreground/90">{point.body}</p>
+            </div>
+          ))}
+        </div>
+      </article>
 
       <div className="mt-10">
         <p className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">
