@@ -618,7 +618,7 @@ function Looking() {
           <p className="mt-3 leading-relaxed text-foreground">
             Primarily remote. Open to the right in-person or hybrid opportunity in
             <strong> Parkland / South Florida</strong>, <strong>Coppell / DFW</strong>, and possibly{" "}
-            <strong> Reno / nearby</strong>.
+            <strong> Reno.
           </p>
         </div>
         <div className="paper-card p-6">
@@ -626,8 +626,7 @@ function Looking() {
             Best fit
           </h3>
           <p className="mt-3 leading-relaxed text-foreground">
-            Work involving SQL, Python, bash, forecasting, analytics, workflow automation, internal
-            tools, reporting systems, or decision-support workflows.
+            Work involving SQL, Python, bash, forecasting, analytics, data quality, workflow automation, internal tools, reporting systems, or decision-support workflows.
           </p>
         </div>
         <div className="paper-card p-6">
