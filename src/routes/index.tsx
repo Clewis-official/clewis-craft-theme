@@ -20,7 +20,9 @@ import {
   TrendingUp,
   Workflow,
 } from "lucide-react";
+import { useEffect, useState } from "react";
 import type { ComponentType, ReactNode } from "react";
+import { LINKEDIN_ENDORSEMENTS } from "@/lib/linkedin-highlights";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -202,6 +204,7 @@ const INTRO_EMAIL =
 const BOOKING_URL = import.meta.env.VITE_BOOKING_URL?.trim() || "";
 const HAS_LIVE_BOOKING = BOOKING_URL.length > 0;
 const BOOKING_CTA_URL = HAS_LIVE_BOOKING ? BOOKING_URL : INTRO_EMAIL;
+const SOCIAL_PROOF_ROTATION_MS = 6500;
 
 function IndexPage() {
   return (
@@ -227,6 +230,8 @@ function Site() {
         <Capabilities />
         <Divider />
         <SelectedWork />
+        <Divider />
+        <SocialProof />
         <Divider />
         <PersonalComputing />
         <Divider />
@@ -274,6 +279,9 @@ function Nav() {
           </a>
           <a className="hover:text-foreground" href="#work">
             Work
+          </a>
+          <a className="hover:text-foreground" href="#proof">
+            Proof
           </a>
           <a className="hover:text-foreground" href="#computing">
             Computing
@@ -521,6 +529,103 @@ function SelectedWork() {
   );
 }
 
+function SocialProof() {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const active = LINKEDIN_ENDORSEMENTS[activeIndex] ?? LINKEDIN_ENDORSEMENTS[0];
+
+  useEffect(() => {
+    if (LINKEDIN_ENDORSEMENTS.length < 2) {
+      return;
+    }
+
+    const timer = window.setInterval(() => {
+      setActiveIndex((current) => (current + 1) % LINKEDIN_ENDORSEMENTS.length);
+    }, SOCIAL_PROOF_ROTATION_MS);
+
+    return () => window.clearInterval(timer);
+  }, []);
+
+  if (!active) {
+    return null;
+  }
+
+  return (
+    <section id="proof" className="py-14 sm:py-20">
+      <SectionHeader
+        eyebrow="Social proof"
+        title="What other people said about working with Aaron"
+      />
+      <p className="mt-4 max-w-3xl text-muted-foreground">
+        Recommendations from former managers and collaborators. The section rotates on its own, but
+        you can jump straight to any quote.
+      </p>
+
+      <div className="mt-8 grid gap-6 lg:grid-cols-[1.3fr_0.7fr]">
+        <article className="paper-card relative overflow-hidden p-6 sm:p-8">
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-transparent" />
+          <div className="relative">
+            <div className="flex items-center justify-between gap-3">
+              <p className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">
+                LinkedIn recommendations
+              </p>
+              <p className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">
+                {String(activeIndex + 1).padStart(2, "0")} /{" "}
+                {String(LINKEDIN_ENDORSEMENTS.length).padStart(2, "0")}
+              </p>
+            </div>
+
+            <p className="mt-8 max-w-4xl font-display text-4xl leading-[1.02] text-foreground sm:text-6xl">
+              &ldquo;{active.featuredLine}&rdquo;
+            </p>
+
+            <p className="mt-6 max-w-3xl text-base leading-relaxed text-muted-foreground sm:text-lg">
+              {active.quote}
+            </p>
+
+            <div className="mt-8 border-t border-border pt-5">
+              <p className="font-display text-2xl text-foreground">{active.recommenderName}</p>
+              <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
+                {active.recommenderTitle}
+              </p>
+              <p className="mt-3 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+                {active.relationship}
+              </p>
+            </div>
+          </div>
+        </article>
+
+        <div className="space-y-3">
+          {LINKEDIN_ENDORSEMENTS.map((endorsement, index) => {
+            const isActive = index === activeIndex;
+
+            return (
+              <button
+                key={endorsement.id}
+                type="button"
+                onClick={() => setActiveIndex(index)}
+                aria-pressed={isActive}
+                className={`paper-card w-full p-4 text-left transition-all ${
+                  isActive
+                    ? "border-primary bg-primary/5 shadow-[0_12px_30px_rgba(0,0,0,0.08)]"
+                    : "hover:border-primary/50 hover:bg-muted/30"
+                }`}
+              >
+                <p className="font-display text-xl leading-tight text-foreground">
+                  &ldquo;{endorsement.featuredLine}&rdquo;
+                </p>
+                <p className="mt-3 text-sm text-muted-foreground">{endorsement.recommenderName}</p>
+                <p className="mt-1 font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
+                  {endorsement.recommenderTitle}
+                </p>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function PersonalComputing() {
   return (
     <section id="computing" className="py-14 sm:py-20">
@@ -626,7 +731,8 @@ function Looking() {
             Best fit
           </h3>
           <p className="mt-3 leading-relaxed text-foreground">
-            Work involving SQL, Python, bash, forecasting, analytics, data quality, workflow automation, internal tools, reporting systems, or decision-support workflows.
+            Work involving SQL, Python, bash, forecasting, analytics, data quality, workflow
+            automation, internal tools, reporting systems, or decision-support workflows.
           </p>
         </div>
         <div className="paper-card p-6">
