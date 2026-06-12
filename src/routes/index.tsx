@@ -652,7 +652,7 @@ function Footer() {
       <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
         <div>
           <div className="font-display text-lg">
-            Aaron<span className="text-primary">.</span>
+            Aaron Clewis<span className="text-primary">.</span>
           </div>
           <p className="mt-1 font-mono text-xs text-muted-foreground">
             Analytics, automation, and durable systems.
