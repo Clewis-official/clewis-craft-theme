@@ -260,9 +260,6 @@ function Nav() {
           <a className="hover:text-foreground" href="#proof">
             Proof
           </a>
-          <a className="hover:text-foreground" href="/computers-as-craft">
-            Computing
-          </a>
           <a className="hover:text-foreground" href="#approach">
             Approach
           </a>
@@ -674,6 +671,15 @@ function Looking() {
             <CalendarDays className="h-4 w-4" />
             {HAS_LIVE_BOOKING ? "Book a 15 min intro" : "Request a 15 min intro"}
           </BookingLink>
+        </div>
+      </div>
+      <div className="mt-8 flex justify-center">
+        <div className="w-full max-w-2xl overflow-hidden rounded-3xl border border-border bg-card p-3 shadow-[0_18px_50px_rgba(0,0,0,0.08)] chad:rounded-none chad:shadow-none">
+          <img
+            src="/terminal-ac.gif"
+            alt="Terminal-style animation with a playful Aaron hire command."
+            className="w-full rounded-2xl border border-border bg-black object-cover chad:rounded-none"
+          />
         </div>
       </div>
     </section>

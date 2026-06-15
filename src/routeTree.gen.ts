@@ -9,15 +9,9 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as ComputersAsCraftRouteImport } from './routes/computers-as-craft'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ApiChatRouteImport } from './routes/api/chat'
 
-const ComputersAsCraftRoute = ComputersAsCraftRouteImport.update({
-  id: '/computers-as-craft',
-  path: '/computers-as-craft',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -31,43 +25,32 @@ const ApiChatRoute = ApiChatRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/computers-as-craft': typeof ComputersAsCraftRoute
   '/api/chat': typeof ApiChatRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/computers-as-craft': typeof ComputersAsCraftRoute
   '/api/chat': typeof ApiChatRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/computers-as-craft': typeof ComputersAsCraftRoute
   '/api/chat': typeof ApiChatRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/computers-as-craft' | '/api/chat'
+  fullPaths: '/' | '/api/chat'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/computers-as-craft' | '/api/chat'
-  id: '__root__' | '/' | '/computers-as-craft' | '/api/chat'
+  to: '/' | '/api/chat'
+  id: '__root__' | '/' | '/api/chat'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  ComputersAsCraftRoute: typeof ComputersAsCraftRoute
   ApiChatRoute: typeof ApiChatRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/computers-as-craft': {
-      id: '/computers-as-craft'
-      path: '/computers-as-craft'
-      fullPath: '/computers-as-craft'
-      preLoaderRoute: typeof ComputersAsCraftRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/': {
       id: '/'
       path: '/'
@@ -87,7 +70,6 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  ComputersAsCraftRoute: ComputersAsCraftRoute,
   ApiChatRoute: ApiChatRoute,
 }
 export const routeTree = rootRouteImport
