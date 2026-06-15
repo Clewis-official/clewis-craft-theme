@@ -12,11 +12,8 @@ import {
   Database,
   FileBarChart,
   FileText,
-  HardDrive,
-  LaptopMinimal,
   Linkedin,
   Mail,
-  ServerCog,
   TrendingUp,
   Workflow,
 } from "lucide-react";
@@ -174,24 +171,6 @@ const COLLISION_CHAMPS_POINTS: SpotlightPoint[] = [
   },
 ];
 
-const COMPUTING_POINTS = [
-  {
-    icon: LaptopMinimal,
-    title: "Programming as habit",
-    body: "Programming is not just something Aaron learned for work. It is a durable habit, a preferred way of thinking, and a toolset he keeps returning to because he genuinely enjoys it.",
-  },
-  {
-    icon: HardDrive,
-    title: "Personal computing depth",
-    body: "Self-hosted systems, Linux workflows, scripting, automation, data tooling, and long-running technical curiosity are part of the same continuum rather than separate hobbies.",
-  },
-  {
-    icon: ServerCog,
-    title: "10,000+ hours of programming",
-    body: "That experience shows up in the way Aaron approaches systems: practical, hands-on, and comfortable moving from messy inputs to durable outputs.",
-  },
-];
-
 const PRINCIPLES = [
   "Keep analysis close to implementation so ideas do not die in handoff.",
   "Prefer durable systems over heroics and repeated manual rescue work.",
@@ -232,8 +211,6 @@ function Site() {
         <SelectedWork />
         <Divider />
         <SocialProof />
-        <Divider />
-        <PersonalComputing />
         <Divider />
         <HowIWork />
         <Divider />
@@ -283,7 +260,7 @@ function Nav() {
           <a className="hover:text-foreground" href="#proof">
             Proof
           </a>
-          <a className="hover:text-foreground" href="#computing">
+          <a className="hover:text-foreground" href="/computers-as-craft">
             Computing
           </a>
           <a className="hover:text-foreground" href="#approach">
@@ -626,65 +603,14 @@ function SocialProof() {
   );
 }
 
-function PersonalComputing() {
-  return (
-    <section id="computing" className="py-14 sm:py-20">
-      <SectionHeader eyebrow="Personal computing" title="Computers as a craft" />
-      <div className="mt-6 grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
-        <div className="paper-card p-6 sm:p-8">
-          <p className="font-display text-2xl leading-tight text-foreground sm:text-3xl">
-            "Many people learn to use tools, but not everyone genuinely loves using computers to get
-            work done."
-          </p>
-          <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground">
-            Aaron is in that second group. He likes programming for its own sake, likes the command
-            line, likes building systems, and likes the feeling of taking something messy and making
-            it coherent. That matters because the work does not stop when the ticket is done. The
-            curiosity stays on.
-          </p>
-          <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted-foreground">
-            The result is a working style shaped by long-running personal computing habits:
-            scripting, Linux, self-hosted tools, infrastructure experiments, data workflows, and a
-            strong preference for understanding how the machinery actually works.
-          </p>
-        </div>
-
-        <div className="paper-card p-6 sm:p-8">
-          <p className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">
-            Why it matters
-          </p>
-          <p className="mt-4 text-sm leading-relaxed text-foreground">
-            Teams benefit when someone does not just tolerate technical tools, but actively likes
-            using them well.
-          </p>
-          <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
-            That tends to produce better debugging, better automation, better judgment around
-            tooling, and more patience for the rough edges that real systems always have.
-          </p>
-        </div>
-      </div>
-
-      <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-3">
-        {COMPUTING_POINTS.map(({ icon: Icon, title, body }) => (
-          <div key={title} className="paper-card flex flex-col gap-3 p-5">
-            <Icon className="h-5 w-5 text-primary" />
-            <h3 className="font-display text-lg text-foreground">{title}</h3>
-            <p className="text-sm leading-relaxed text-muted-foreground">{body}</p>
-          </div>
-        ))}
-      </div>
-    </section>
-  );
-}
-
 function HowIWork() {
   return (
     <section id="approach" className="py-14 sm:py-20">
       <SectionHeader eyebrow="Approach" title="How Aaron works" />
       <p className="mt-6 max-w-3xl text-lg leading-relaxed text-foreground/90">
         He does his best work on messy, real business problems where analysis and implementation
-        stay close together. The goal is not theory for its own sake. The goal is useful systems,
-        cleaner decisions, and less waste in the workflow.
+        come together. The goal is not theory for its own sake. The goal is useful systems, cleaner
+        decisions, and less waste in the workflow.
       </p>
       <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-3">
         {PRINCIPLES.map((principle) => (

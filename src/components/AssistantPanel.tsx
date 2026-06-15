@@ -12,7 +12,6 @@ const SUGGESTED = [
   "What did he build at Collision Champs?",
   "Tell me about Aaron's forecasting experience.",
   "How does Aaron explain his career break?",
-  "What does Aaron mean by personal computing?",
 ];
 
 export function AssistantPanel() {
